@@ -1,0 +1,24 @@
+security:
+    enable_authenticator_manager: true
+
+    providers:
+      app_user_provider:
+        id: Auth\Infrastructure\Symfony\UserProvider
+
+    firewalls:
+        api:
+          pattern: ^/.*
+          stateless: true
+          entry_point: jwt
+          provider: app_user_provider
+          jwt: ~
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+
+    access_control:
+         - { path: ^/private, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/auth/change_password, roles: IS_AUTHENTICATED_FULLY }

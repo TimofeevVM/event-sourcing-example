@@ -1,0 +1,6 @@
+GET http://localhost:{{PORT}}/private/
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+

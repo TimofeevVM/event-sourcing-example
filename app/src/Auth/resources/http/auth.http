@@ -1,0 +1,30 @@
+POST http://localhost:{{PORT}}/auth/registration/
+Content-Type: application/json
+
+{
+    "username": "somebody",
+    "password": "qwerty",
+    "email": "somebody@gmail.com"
+}
+
+###
+
+POST http://localhost:{{PORT}}/auth/login/
+Content-Type: application/json
+
+{
+    "username": "somebody",
+    "password": "qwerty123"
+}
+
+###
+
+POST http://localhost:{{PORT}}/auth/change_password/
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "new_password": "qwerty123"
+}
+
+

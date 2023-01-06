@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<psalm
+        errorLevel="1"
+        resolveFromConfigFile="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src/Auth/src" />
+        <directory name="src/Shared/src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="src/Shared/src/Infrastructure/Tests" />
+            <directory name="src/Auth/src/Infrastructure/Http/Controller" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
