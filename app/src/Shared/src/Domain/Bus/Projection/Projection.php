@@ -9,7 +9,7 @@ use Shared\Domain\Bus\Event\Event;
 interface Projection
 {
     /**
-     * @return list<class-string<Event>>
+     * @return list<class-string>
      */
     public function listenTo(): array;
 

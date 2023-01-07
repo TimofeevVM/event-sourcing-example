@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shared\Infrastructure\Bus\Event\EventStore\Dbal;
+namespace Shared\Infrastructure\EventSourcing\EventStore\Dbal;
 
 use Doctrine\DBAL\Connection;
 use Shared\Domain\Aggregate\AggregateId;
 use Shared\Domain\Bus\Event\Deserializer;
 use Shared\Domain\Bus\Event\EventException;
-use Shared\Domain\Bus\Event\EventStore;
 use Shared\Domain\Bus\Event\EventStream;
 use Shared\Domain\Bus\Event\Serializer;
+use Shared\Domain\EventSourcing\EventStore\EventStore;
 
 class DbalEventStore implements EventStore
 {
@@ -53,12 +53,28 @@ class DbalEventStore implements EventStore
 
     public function getEventStream(AggregateId $aggregateId): EventStream
     {
+        return $this->getEventStreamFromVersion($aggregateId, 0);
+    }
+
+    public function getCurrentVersion(AggregateId $aggregateId): int
+    {
+        return (int) $this->connection->fetchOne(
+            'SELECT MAX(version)'
+            .' FROM '.$this->tableName
+            .' WHERE "aggregate_id" = ?',
+            [$aggregateId->value()]
+        );
+    }
+
+    public function getEventStreamFromVersion(AggregateId $aggregateId, int $version): EventStream
+    {
         $rawEvents = $this->connection->fetchAllAssociative(
             'SELECT "id", "aggregate_id", "occurred_on", "version", "payload" '
             .' FROM '.$this->tableName
             .' WHERE "aggregate_id" = ?'
+            .' AND "version" >= ?'
             .' ORDER BY "version" ASC',
-            [$aggregateId->value()]
+            [$aggregateId->value(), $version]
         );
 
         $eventStream = new EventStream($aggregateId);
@@ -73,15 +89,5 @@ class DbalEventStore implements EventStore
         }
 
         return $eventStream;
-    }
-
-    public function getCurrentVersion(AggregateId $aggregateId): int
-    {
-        return (int) $this->connection->fetchOne(
-            'SELECT MAX(version)'
-            .' FROM '.$this->tableName
-            .' WHERE "aggregate_id" = ?',
-            [$aggregateId->value()]
-        );
     }
 }

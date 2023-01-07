@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shared\Infrastructure\Bus\Event\EventStore\Dbal;
+namespace Shared\Infrastructure\EventSourcing\EventStore\Dbal;
 
 class DbalEventStoreNotAppend extends \Exception
 {

@@ -7,14 +7,14 @@ namespace Auth\Infrastructure\Repository\Domain\User\EventStore;
 use Auth\Domain\User\Model\User;
 use Auth\Domain\User\Model\UserRepositoryPersistence;
 use Shared\Domain\Aggregate\AggregateId;
-use Shared\Domain\Bus\Event\EventStore;
 use Shared\Domain\Bus\Projection\Projector;
+use Shared\Domain\EventSourcing\EventStore\EventStore;
 
 class EsUserRepositoryPersistence implements UserRepositoryPersistence
 {
     public function __construct(
-        private EventStore $eventStore,
-        private Projector $projector,
+        private readonly EventStore $eventStore,
+        private readonly Projector $projector,
     ) {
     }
 

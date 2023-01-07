@@ -34,9 +34,7 @@ abstract class AggregateRoot implements Aggregate, AggregateEventable, Aggregate
     {
         $aggregate = new static($eventStream->aggregateId);
 
-        foreach ($eventStream as $event) {
-            $aggregate->apply($event);
-        }
+        $aggregate->replay($eventStream);
 
         return $aggregate;
     }
@@ -54,6 +52,7 @@ abstract class AggregateRoot implements Aggregate, AggregateEventable, Aggregate
 
     protected function record(Event $events): void
     {
+        $events->setVersion($this->version + 1);
         $this->getEventStream()->append($events);
     }
 
@@ -64,6 +63,7 @@ abstract class AggregateRoot implements Aggregate, AggregateEventable, Aggregate
 
         if (method_exists($this, $name)) {
             $this->{$name}($event);
+            $this->version = $event->getVersion();
         }
 
         return $this;
@@ -73,5 +73,17 @@ abstract class AggregateRoot implements Aggregate, AggregateEventable, Aggregate
     {
         $this->record($event);
         $this->apply($event);
+    }
+
+    public function version(): int
+    {
+        return $this->version;
+    }
+
+    public function replay(EventStream $events): void
+    {
+        foreach ($events as $event) {
+            $this->apply($event);
+        }
     }
 }

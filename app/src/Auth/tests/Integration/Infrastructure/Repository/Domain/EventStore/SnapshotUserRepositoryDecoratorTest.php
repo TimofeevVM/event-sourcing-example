@@ -11,14 +11,16 @@ use Auth\Domain\User\Model\UserPasswordHash;
 use Auth\Infrastructure\Projection\SecurityUser\Dbal\UserWasPasswordHashChangedProjection;
 use Auth\Infrastructure\Projection\SecurityUser\Dbal\UserWasRegisteredProjection;
 use Auth\Infrastructure\Repository\Domain\User\EventStore\EsUserRepositoryPersistence;
+use Auth\Infrastructure\Repository\Domain\User\EventStore\SnapshotUserRepositoryDecorator;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerBuilder;
 use Shared\Infrastructure\Bus\Event\Serializer\JMS\JMSSerializer;
 use Shared\Infrastructure\Bus\Projection\Projector\InMemory\ProjectorInMemory;
 use Shared\Infrastructure\EventSourcing\EventStore\Dbal\DbalEventStore;
+use Shared\Infrastructure\EventSourcing\Snapshot\Dbal\DbalSnapshotRepository;
 use Shared\Infrastructure\Tests\PhpUnit\InfrastructureTestCase;
 
-class EsUserRepositoryPersistenceTest extends InfrastructureTestCase
+class SnapshotUserRepositoryDecoratorTest extends InfrastructureTestCase
 {
     private \Doctrine\DBAL\Connection $connection;
 
@@ -61,13 +63,19 @@ class EsUserRepositoryPersistenceTest extends InfrastructureTestCase
             ])
         );
 
+        $snapshotRepository = new DbalSnapshotRepository($this->connection);
+        $repository = new SnapshotUserRepositoryDecorator(
+            $repository,
+            $snapshotRepository,
+            $eventStore,
+            5
+        );
+
         $repository->persist($user);
 
         $esUser = $repository->ofId($user->id());
 
-        $this->assertTrue($user->getUsername()->equals($esUser->getUsername()));
-        $this->assertTrue($user->getEmail()->equals($esUser->getEmail()));
-        $this->assertTrue($user->getPasswordHash()->equals($esUser->getPasswordHash()));
-        $this->assertSame($user->version(), $esUser->version());
+        $snapshotUser = $snapshotRepository->get($esUser->id()->value());
+        $this->assertSame($esUser->version(), $snapshotUser->version);
     }
 }

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Shared\Integration\Infrastructure\Bus\Event\EventStore\Dbal;
+namespace Tests\Shared\Integration\Infrastructure\EventSourcing\EventStore\Dbal;
 
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerBuilder;
 use Shared\Domain\Bus\Event\EventStream;
-use Shared\Infrastructure\Bus\Event\EventStore\Dbal\DbalEventStore;
 use Shared\Infrastructure\Bus\Event\Serializer\JMS\JMSSerializer;
+use Shared\Infrastructure\EventSourcing\EventStore\Dbal\DbalEventStore;
 use Shared\Infrastructure\Tests\PhpUnit\InfrastructureTestCase;
-use Tests\Shared\Integration\Infrastructure\Bus\Event\EventStore\Dbal\Support\AggregateIdTested;
-use Tests\Shared\Integration\Infrastructure\Bus\Event\EventStore\Dbal\Support\EventTested;
+use Tests\Shared\Integration\Infrastructure\EventSourcing\EventStore\Dbal\Support\AggregateIdTested;
+use Tests\Shared\Integration\Infrastructure\EventSourcing\EventStore\Dbal\Support\EventTested;
 
 class DbalEventStoreTest extends InfrastructureTestCase
 {
