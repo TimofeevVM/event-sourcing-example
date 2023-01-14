@@ -14,6 +14,8 @@ services:
     _instanceof:
       \Shared\Domain\Bus\Projection\Projection:
         tags: [ 'shared.domain.bus.projector.projection' ]
+      \Shared\Domain\EventSourcing\Upcasting\Upcaster:
+        tags: [ 'shared.domain.eventsourcing.upcasting.upcaster' ]
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -35,5 +37,18 @@ services:
 
     Shared\Infrastructure\Tests\Doctrine\DatabaseArrangerInterface: '@Shared\Infrastructure\Tests\Doctrine\DatabaseArranger'
 
-    Shared\Infrastructure\Bus\Projection\Projector\InMemory\ProjectorInMemory:
+    Auth\Domain\User\Model\UserRepositoryPersistence: '@Auth\Infrastructure\Repository\Domain\User\EventStore\EsUserRepositoryPersistence'
+
+#    Shared\Infrastructure\Bus\Projection\Projector\InMemory\ProjectorInMemory:
+#      arguments: [ !tagged shared.domain.bus.projector.projection ]
+  
+    Shared\Infrastructure\Bus\Projection\Projector\Redis\ProjectorConsumer:
       arguments: [ !tagged shared.domain.bus.projector.projection ]
+
+    Shared\Domain\Bus\Projection\Projector: '@Shared\Infrastructure\Bus\Projection\Projector\Redis\ProjectorProducer'
+
+    Shared\Domain\Bus\Event\Deserializer: '@Shared\Infrastructure\Bus\Event\Serializer\JMS\JMSSerializer'
+
+    Shared\Infrastructure\Bus\Event\Serializer\UpcastSerializer:
+      decorates: Shared\Domain\Bus\Event\Deserializer
+      arguments: [ '@.inner', !tagged shared.domain.eventsourcing.upcasting.upcaster ]

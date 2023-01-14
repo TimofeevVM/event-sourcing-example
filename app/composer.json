@@ -12,6 +12,7 @@
         "jms/serializer-bundle": "^5.0",
         "lexik/jwt-authentication-bundle": "^2.16",
         "ramsey/uuid": "^4.7",
+        "symfony-bundles/redis-bundle": "^3.1",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
@@ -56,7 +57,7 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
-        "psalm": "./vendor/bin/psalm",
+        "psalm": "./vendor/bin/psalm --no-cache",
         "php-cs-fix": "./vendor/bin/php-cs-fixer fix src/",
         "tests:unit": "bin/phpunit --testsuite unit",
         "tests:integration": "bin/phpunit --testsuite integration"

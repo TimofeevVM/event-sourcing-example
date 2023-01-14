@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e52507f3061b4595bd444b3c73430ec",
+    "content-hash": "6298aeee8262d52061699de7dddd1e09",
     "packages": [
         {
             "name": "brick/math",
@@ -2198,6 +2198,72 @@
             "time": "2022-12-20T20:56:55+00:00"
         },
         {
+            "name": "predis/predis",
+            "version": "v1.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/predis/predis.git",
+                "reference": "a2fb02d738bedadcffdbb07efa3a5e7bd57f8d6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/predis/predis/zipball/a2fb02d738bedadcffdbb07efa3a5e7bd57f8d6e",
+                "reference": "a2fb02d738bedadcffdbb07efa3a5e7bd57f8d6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net",
+                    "role": "Creator & Maintainer"
+                },
+                {
+                    "name": "Till Krüss",
+                    "homepage": "https://till.im",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/predis/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "support": {
+                "issues": "https://github.com/predis/predis/issues",
+                "source": "https://github.com/predis/predis/tree/v1.1.10"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/tillkruss",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-05T17:46:08+00:00"
+        },
+        {
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -2627,6 +2693,71 @@
                 }
             ],
             "time": "2022-12-31T22:20:34+00:00"
+        },
+        {
+            "name": "symfony-bundles/redis-bundle",
+            "version": "3.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony-bundles/redis-bundle.git",
+                "reference": "e26ed034779b486de7282843a5db2a91b47f16ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony-bundles/redis-bundle/zipball/e26ed034779b486de7282843a5db2a91b47f16ef",
+                "reference": "e26ed034779b486de7282843a5db2a91b47f16ef",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2||^8.0",
+                "predis/predis": "~1.1",
+                "symfony/framework-bundle": "^4.3||^5.0||^6.0",
+                "symfony/yaml": "^4.3||^5.0||^6.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^8.5||^9.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symfony/phpunit-bridge": "^5.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SymfonyBundles\\RedisBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Khaperets",
+                    "email": "khaperets@gmail.com"
+                }
+            ],
+            "description": "Symfony Redis Bundle",
+            "homepage": "https://github.com/symfony-bundles/redis-bundle",
+            "keywords": [
+                "bundle",
+                "nosql",
+                "redis",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/symfony-bundles/redis-bundle/issues",
+                "source": "https://github.com/symfony-bundles/redis-bundle/tree/3.1.5"
+            },
+            "time": "2022-04-06T08:10:41+00:00"
         },
         {
             "name": "symfony/cache",

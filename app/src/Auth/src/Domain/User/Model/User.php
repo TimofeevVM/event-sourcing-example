@@ -6,7 +6,7 @@ namespace Auth\Domain\User\Model;
 
 use Auth\Domain\User\Event\UserEmailWasChanged;
 use Auth\Domain\User\Event\UserPasswordHashWasChanged;
-use Auth\Domain\User\Event\UserWasRegistered;
+use Auth\Domain\User\Event\UserWasRegisteredV2;
 use Shared\Domain\Aggregate\Aggregate;
 use Shared\Domain\Aggregate\AggregateEventable;
 use Shared\Domain\Aggregate\AggregateId;
@@ -36,18 +36,19 @@ class User extends AggregateRoot implements Aggregate, AggregateEventable, Aggre
         $user = new self(UserId::random());
 
         $user->recordAndApply(
-            new UserWasRegistered(
+            new UserWasRegisteredV2(
                 $user->id()->value(),
                 $username->value(),
                 $email->value(),
-                $passwordHash->value()
+                $passwordHash->value(),
+                ['member'],
             )
         );
 
         return $user;
     }
 
-    protected function onUserWasRegistered(UserWasRegistered $event): void
+    protected function onUserWasRegisteredV2(UserWasRegisteredV2 $event): void
     {
         $this->id = UserId::fromString($event->getAggregateId());
         $this->username = Username::fromString($event->username);

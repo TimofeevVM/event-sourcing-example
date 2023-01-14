@@ -7,6 +7,7 @@ namespace Tests\Auth\Domain\User\Model;
 use Auth\Domain\User\Event\UserEmailWasChanged;
 use Auth\Domain\User\Event\UserPasswordHashWasChanged;
 use Auth\Domain\User\Event\UserWasRegistered;
+use Auth\Domain\User\Event\UserWasRegisteredV2;
 use Auth\Domain\User\Model\User;
 use Auth\Domain\User\Model\UserEmail;
 use Auth\Domain\User\Model\Username;
@@ -28,7 +29,7 @@ class UserTest extends TestCase
 
         /** @var UserWasRegistered $userWasCreated */
         $userWasCreated = $events->current();
-        $this->assertInstanceOf(UserWasRegistered::class, $userWasCreated);
+        $this->assertInstanceOf(UserWasRegisteredV2::class, $userWasCreated);
         $this->assertSame($user->id()->value(), $userWasCreated->getAggregateId());
         $this->assertSame('somebody', $userWasCreated->username);
         $this->assertSame('somebody@gmail.com', $userWasCreated->email);

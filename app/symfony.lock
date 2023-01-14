@@ -85,6 +85,18 @@
             "tests/bootstrap.php"
         ]
     },
+    "symfony-bundles/redis-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "2becca99cc83c0e6d2ad68875fa84c516298dec4"
+        },
+        "files": [
+            "config/packages/sb_redis.yaml"
+        ]
+    },
     "symfony/console": {
         "version": "6.1",
         "recipe": {
